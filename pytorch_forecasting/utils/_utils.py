@@ -415,6 +415,8 @@ class OutputMixIn:
 class TupleOutputMixIn:
     """MixIn to give output a namedtuple-like access capabilitieswith ``to_network_output() function``."""  # noqa : E501
 
+    _output_class = None  # Add class-level reference
+
     def to_network_output(self, **results):
         """
         Convert output into a named (and immuatable) tuple.
@@ -424,15 +426,16 @@ class TupleOutputMixIn:
         Returns:
             named tuple
         """
-        if hasattr(self, "_output_class"):
-            Output = self._output_class
-        else:
-            OutputTuple = namedtuple("output", results)
+
+        if self._output_class is None:
+            OutputTuple = namedtuple("output", results.keys())
+
+            # OutputTuple = namedtuple("output", results)
 
             class Output(OutputMixIn, OutputTuple):
                 pass
 
-            self._output_class = Output
+            self.__class__._output_class = Output
 
         return self._output_class(**results)
 
