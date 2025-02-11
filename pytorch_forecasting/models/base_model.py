@@ -260,6 +260,8 @@ class PredictCallback(BasePredictionWriter):
 
         lengths = x["decoder_lengths"]
 
+        # print(f"predicting batch: {batch_idx}, batch: {batch}")
+
         nan_mask = create_mask(lengths.max(), lengths)
         if isinstance(self.mode, (tuple, list)):
             if self.mode[0] == "raw":
@@ -330,6 +332,21 @@ class PredictCallback(BasePredictionWriter):
             super().on_predict_batch_end(
                 trainer, pl_module, out, batch, batch_idx, dataloader_idx
             )
+
+    def on_predict_batch_start(
+        self,
+        trainer,
+        pl_module,
+        batch: Any = None,
+        batch_idx: int = None,
+        dataloader_idx: int = 0,
+    ) -> None:
+        # extract predictions form output
+        x = batch[0]
+
+        # lengths = x["decoder_lengths"]
+        # print("lengths", lengths)
+        # print(f"predicting batch: {batch_idx}, batch: {batch}")
 
     def write_on_batch_end(
         self,
