@@ -333,20 +333,20 @@ class PredictCallback(BasePredictionWriter):
                 trainer, pl_module, out, batch, batch_idx, dataloader_idx
             )
 
-    def on_predict_batch_start(
-        self,
-        trainer,
-        pl_module,
-        batch: Any = None,
-        batch_idx: int = None,
-        dataloader_idx: int = 0,
-    ) -> None:
-        # extract predictions form output
-        x = batch[0]
+    # def on_predict_batch_start(
+    #     self,
+    #     trainer,
+    #     pl_module,
+    #     batch: Any = None,
+    #     batch_idx: int = None,
+    #     dataloader_idx: int = 0,
+    # ) -> None:
+    #     # extract predictions form output
+    #     x = batch[0]
 
-        # lengths = x["decoder_lengths"]
-        # print("lengths", lengths)
-        # print(f"predicting batch: {batch_idx}, batch: {batch}")
+    #     lengths = x["decoder_lengths"]
+    #     print("lengths", lengths)
+    #     print(f"predicting batch: {batch_idx}, batch: {batch}")
 
     def write_on_batch_end(
         self,
